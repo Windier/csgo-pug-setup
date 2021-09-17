@@ -415,9 +415,9 @@
 	{
 		"en"		"Set captains"
 	}
-	"AimWarmupMenuOption"
+	"SurfWarmupMenuOption"
 	{
-		"en"		"Use aim map warmup"
+		"en"		"Use surf map warmup"
 	}
 	"ChangeMapMenuOption"
 	{
