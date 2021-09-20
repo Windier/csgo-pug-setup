@@ -79,20 +79,20 @@ public void SetupMenu(int client, bool displayOnly, int menuPosition) {
     AddMenuItem(menu, "autolive", buffer, style);
   }
 
-  // 7. use aim_ map warmup
-  if (g_DisplayAimWarmup && g_AimMapList.Length >= 1) {
+  // 7. use surf_ map warmup
+  if (g_DisplaySurfWarmup && g_SurfMapList.Length >= 1) {
     char enabledString[128];
-    bool aim_enabled = g_DoAimWarmup;
-    int aim_style = style;
+    bool surf_enabled = g_DoSurfWarmup;
+    int surf_style = style;
 
     if (g_MapType == MapType_Current) {
-      aim_enabled = false;
-      aim_style = ITEMDRAW_DISABLED;
+      surf_enabled = false;
+      surf_style = ITEMDRAW_DISABLED;
     }
 
-    GetEnabledString(enabledString, sizeof(enabledString), aim_enabled, client);
-    Format(buffer, sizeof(buffer), "%T: %s", "AimWarmupMenuOption", client, enabledString);
-    AddMenuItem(menu, "aim_warmup", buffer, aim_style);
+    GetEnabledString(enabledString, sizeof(enabledString), surf_enabled, client);
+    Format(buffer, sizeof(buffer), "%T: %s", "SurfWarmupMenuOption", client, enabledString);
+    AddMenuItem(menu, "surf_warmup", buffer, surf_style);
   }
 
   // 8. set captains
@@ -180,8 +180,8 @@ public int SetupMenuHandler(Menu menu, MenuAction action, int param1, int param2
     } else if (StrEqual(buffer, "cancel_setup")) {
       FakeClientCommand(client, "sm_endgame");
 
-    } else if (StrEqual(buffer, "aim_warmup")) {
-      g_DoAimWarmup = !g_DoAimWarmup;
+    } else if (StrEqual(buffer, "surf_warmup")) {
+      g_DoSurfWarmup = !g_DoSurfWarmup;
       PugSetup_GiveSetupMenu(client, false, pos);
     }
 
@@ -327,8 +327,8 @@ public void SetupFinished() {
   Call_StartForward(g_hOnSetup);
   Call_Finish();
 
-  if (!g_OnDecidedMap && g_DoAimWarmup && !OnAimMap()) {
-    ChangeToAimMap();
+  if (!g_OnDecidedMap && g_DoSurfWarmup && !OnSurfMap()) {
+    ChangeToSurfMap();
   }
 }
 

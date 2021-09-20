@@ -193,18 +193,18 @@ stock void AddMapIndexToMenu(Menu menu, ArrayList mapList, int mapIndex, bool di
     AddMenuInt(menu, mapIndex, mapName);
 }
 
-public bool OnAimMap() {
+public bool OnSurfMap() {
   char currentMap[PLATFORM_MAX_PATH];
   GetCurrentMap(currentMap, sizeof(currentMap));
 
-  // if the map starts with 'aim' or exists in the aim map list
-  bool ret = StrContains(currentMap, "aim") == 0 || g_AimMapList.FindString(currentMap) >= 0;
+  // if the map starts with 'surf' or exists in the surf map list
+  bool ret = StrContains(currentMap, "surf") == 0 || g_SurfMapList.FindString(currentMap) >= 0;
   return ret;
 }
 
-public void ChangeToAimMap() {
-  if (g_AimMapList.Length > 0) {
-    ChangeMap(g_AimMapList, GetArrayRandomIndex(g_AimMapList), 5.0, false);
+public void ChangeToSurfMap() {
+  if (g_SurfMapList.Length > 0) {
+    ChangeMap(g_SurfMapList, GetArrayRandomIndex(g_SurfMapList), 5.0, false);
   }
 }
 

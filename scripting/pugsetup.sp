@@ -30,7 +30,7 @@
 
 /** ConVar handles **/
 ConVar g_AdminFlagCvar;
-ConVar g_AimMapListCvar;
+ConVar g_SurfMapListCvar;
 ConVar g_AllowCustomReadyMessageCvar;
 ConVar g_AnnounceCountdownCvar;
 ConVar g_AutoRandomizeCaptainsCvar;
@@ -74,14 +74,14 @@ bool g_DisplayKnifeRound = true;
 bool g_DisplayTeamSize = true;
 bool g_DisplayRecordDemo = true;
 bool g_DisplayMapChange = false;
-bool g_DisplayAimWarmup = true;
+bool g_DisplaySurfWarmup = true;
 bool g_DisplayPlayout = false;
 
 /** Setup info **/
 int g_Leader = -1;
 ArrayList g_MapList;
 ArrayList g_PastMaps;
-ArrayList g_AimMapList;
+ArrayList g_SurfMapList;
 bool g_ForceEnded = false;
 
 /** Specific choices made when setting up **/
@@ -91,7 +91,7 @@ MapType g_MapType = MapType_Vote;
 bool g_RecordGameOption = false;
 bool g_DoKnifeRound = false;
 bool g_AutoLive = true;
-bool g_DoAimWarmup = false;
+bool g_DoSurfWarmup = false;
 bool g_DoPlayout = false;
 
 /** Other important variables about the state of the game **/
@@ -224,9 +224,9 @@ public void OnPluginStart() {
   g_AdminFlagCvar = CreateConVar(
       "sm_pugsetup_admin_flag", "b",
       "Admin flag to mark players as having elevated permissions - e.g. can always pause,setup,end the game, etc.");
-  g_AimMapListCvar = CreateConVar(
-      "sm_pugsetup_maplist_aim_maps", "aim_maps.txt",
-      "If using aim map warmup, the maplist file in addons/sourcemod/configs/pugsetup to use. You may also use a workshop collection ID instead of a maplist if you have the SteamWorks extension installed.");
+  g_SurfMapListCvar = CreateConVar(
+      "sm_pugsetup_maplist_surf_maps", "surf_maps.txt",
+      "If using surf map warmup, the maplist file in addons/sourcemod/configs/pugsetup to use. You may also use a workshop collection ID instead of a maplist if you have the SteamWorks extension installed.");
   g_AllowCustomReadyMessageCvar =
       CreateConVar("sm_pugsetup_allow_custom_ready_messages", "1",
                    "Whether users can set custom ready messages saved via a clientprefs cookie");
@@ -333,7 +333,7 @@ public void OnPluginStart() {
   g_CvarVersionCvar.SetString(PLUGIN_VERSION);
 
   HookConVarChange(g_MapListCvar, OnMapListChanged);
-  HookConVarChange(g_AimMapListCvar, OnAimMapListChanged);
+  HookConVarChange(g_SurfMapListCvar, OnSurfMapListChanged);
 
   /** Commands **/
   g_Commands = new ArrayList(COMMAND_LENGTH);
@@ -380,7 +380,7 @@ public void OnPluginStart() {
                      Permission_Admin);
   AddPugSetupCommand("listpugmaps", Command_ListPugMaps, "Lists the current maplist",
                      Permission_All);
-  AddPugSetupCommand("listaimmaps", Command_ListAimMaps, "Lists the current aim maplist",
+  AddPugSetupCommand("listsurfmaps", Command_ListSurfMaps, "Lists the current surf maplist",
                      Permission_All);
   AddPugSetupCommand("start", Command_Start, "Starts the game if autolive is disabled",
                      Permission_Leader, ChatAlias_WhenSetup);
@@ -489,15 +489,15 @@ public void OnMapListChanged(ConVar convar, const char[] oldValue, const char[] 
   }
 }
 
-public void OnAimMapListChanged(ConVar convar, const char[] oldValue, const char[] newValue) {
+public void OnSurfMapListChanged(ConVar convar, const char[] oldValue, const char[] newValue) {
   if (!StrEqual(oldValue, newValue)) {
-    FillMapList(g_AimMapListCvar, g_AimMapList);
+    FillMapList(g_SurfMapListCvar, g_SurfMapList);
   }
 }
 
 public void OnConfigsExecuted() {
   FillMapList(g_MapListCvar, g_MapList);
-  FillMapList(g_AimMapListCvar, g_AimMapList);
+  FillMapList(g_SurfMapListCvar, g_SurfMapList);
   ReadPermissions();
 }
 
@@ -576,7 +576,7 @@ public Action Timer_CheckReady(Handle timer) {
     return Plugin_Stop;
   }
 
-  if (g_DoAimWarmup) {
+  if (g_DoSurfWarmup) {
     EnsurePausedWarmup();
   }
 
@@ -944,14 +944,14 @@ public Action Command_ListPugMaps(int client, int args) {
   return Plugin_Handled;
 }
 
-public Action Command_ListAimMaps(int client, int args) {
-  if (!DoPermissionCheck(client, "sm_listaimmaps")) {
+public Action Command_ListSurfMaps(int client, int args) {
+  if (!DoPermissionCheck(client, "sm_listsurfmaps")) {
     if (IsValidClient(client))
       PugSetup_Message(client, "%t", "NoPermission");
     return Plugin_Handled;
   }
 
-  ListMapList(client, g_AimMapList);
+  ListMapList(client, g_SurfMapList);
   return Plugin_Handled;
 }
 
@@ -1916,8 +1916,8 @@ public void ScrambleTeams() {
 
 public void ExecWarmupConfigs() {
   ExecCfg(g_WarmupCfgCvar);
-  if (OnAimMap() && g_DoAimWarmup && !g_OnDecidedMap) {
-    ServerCommand("exec sourcemod/pugsetup/aim_warmup.cfg");
+  if (OnSurfMap() && g_DoSurfWarmup && !g_OnDecidedMap) {
+    ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
   }
 }
 

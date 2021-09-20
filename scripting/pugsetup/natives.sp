@@ -16,7 +16,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
   g_ChatAliasesModes = new ArrayList();
 
   g_MapList = new ArrayList(PLATFORM_MAX_PATH);
-  g_AimMapList = new ArrayList(PLATFORM_MAX_PATH);
+  g_SurfMapList = new ArrayList(PLATFORM_MAX_PATH);
   g_PermissionsMap = new StringMap();
 
   CreateNative("PugSetup_SetupGame", Native_SetupGame);
