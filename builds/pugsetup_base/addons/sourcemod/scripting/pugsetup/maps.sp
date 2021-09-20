@@ -202,11 +202,26 @@ public bool OnSurfMap() {
   return ret;
 }
 
-public void ChangeToSurfMap() {
-  if (g_SurfMapList.Length > 0) {
-    ChangeMap(g_SurfMapList, GetArrayRandomIndex(g_SurfMapList), 5.0, false);
-  }
-}
+// public void ChangeToSurfMap() {
+
+//   ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
+//   ServerCommand("exec sourcemod/pugsetup/set64tick.cfg");
+
+//   if (g_SurfMapList.Length > 0) {
+//     ChangeMap(g_SurfMapList, GetArrayRandomIndex(g_SurfMapList), 5.0, false);
+//   }
+// }
+
+// public void RevertSurfSettings() {
+//   ServerCommand("exec sourcemod/pugsetup/undo_surf_warmup.cfg");
+//   ServerCommand("exec sourcemod/pugsetup/set128tick.cfg");
+// }
+
+// public void ChangeToNormalMap() {
+  
+//   RevertSurfSettings()
+//   ChangeMap(g_MapListCvar, 1, 5.0, false); // Change to the first map in the map pool
+// }
 
 public int GetMapIdFromString(const char[] map) {
   char buffers[4][PLATFORM_MAX_PATH];

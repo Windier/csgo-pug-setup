@@ -317,8 +317,8 @@ native Permission PugSetup_GetPermissions(const char[] command);
 native bool PugSetup_SetPermissions(const char[] command, Permission p);
 
 
-native void RevertSurfSettings();
-native void ChangeToNormalMap();
+// native void RevertSurfSettings();
+// native void ChangeToNormalMap();
 
 public SharedPlugin __pl_pugsetup = {
     name = "pugsetup", file = "pugsetup.smx",

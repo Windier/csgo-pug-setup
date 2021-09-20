@@ -1916,9 +1916,9 @@ public void ScrambleTeams() {
 
 public void ExecWarmupConfigs() {
   ExecCfg(g_WarmupCfgCvar);
-  if (OnSurfMap() && g_DoSurfWarmup && !g_OnDecidedMap) {
-    ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
-  }
+  // if (OnSurfMap() && g_DoSurfWarmup && !g_OnDecidedMap) {
+  //   ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
+  // }
 }
 
 public void ExecGameConfigs() {
