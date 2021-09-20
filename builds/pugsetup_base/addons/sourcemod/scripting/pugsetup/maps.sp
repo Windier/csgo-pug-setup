@@ -33,6 +33,8 @@ public Action Timer_DelayedChangeMap(Handle timer, Handle data) {
   g_SwitchingMaps = true;
 
   if (IsMapValid(map)) {
+    ServerCommand("exec sourcemod/pugsetup/undo_surf_warmup.cfg");
+    ServerCommand("exec sourcemod/pugsetup/set128tick.cfg");
     ServerCommand("changelevel %s", map);
   } else if (StrContains(map, "workshop") == 0) {
     ServerCommand("host_workshop_map %d", GetMapIdFromString(map));
