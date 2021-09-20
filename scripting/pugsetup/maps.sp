@@ -33,8 +33,6 @@ public Action Timer_DelayedChangeMap(Handle timer, Handle data) {
   g_SwitchingMaps = true;
 
   if (IsMapValid(map)) {
-    ServerCommand("exec sourcemod/pugsetup/undo_surf_warmup.cfg");
-    ServerCommand("exec sourcemod/pugsetup/set128tick.cfg");
     ServerCommand("changelevel %s", map);
   } else if (StrContains(map, "workshop") == 0) {
     ServerCommand("host_workshop_map %d", GetMapIdFromString(map));
@@ -205,9 +203,24 @@ public bool OnSurfMap() {
 }
 
 public void ChangeToSurfMap() {
+
+  ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
+  ServerCommand("exec sourcemod/pugsetup/set64tick.cfg");
+
   if (g_SurfMapList.Length > 0) {
     ChangeMap(g_SurfMapList, GetArrayRandomIndex(g_SurfMapList), 5.0, false);
   }
+}
+
+public void RevertSurfSettings() {
+  ServerCommand("exec sourcemod/pugsetup/undo_surf_warmup.cfg");
+  ServerCommand("exec sourcemod/pugsetup/set128tick.cfg");
+}
+
+public void ChangeToNormalMap() {
+  
+  RevertSurfSettings()
+  ChangeMap(g_MapListCvar, 1, 5.0, false); // Change to the first map in the map pool
 }
 
 public int GetMapIdFromString(const char[] map) {
