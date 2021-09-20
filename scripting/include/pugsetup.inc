@@ -316,6 +316,10 @@ native Permission PugSetup_GetPermissions(const char[] command);
 // Note: permissions-checking is only relevent for pugsetup commands.
 native bool PugSetup_SetPermissions(const char[] command, Permission p);
 
+
+native void RevertSurfSettings();
+native void ChangeToNormalMap();
+
 public SharedPlugin __pl_pugsetup = {
     name = "pugsetup", file = "pugsetup.smx",
 #if defined REQUIRE_PLUGIN

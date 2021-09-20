@@ -182,6 +182,17 @@ public int SetupMenuHandler(Menu menu, MenuAction action, int param1, int param2
 
     } else if (StrEqual(buffer, "surf_warmup")) {
       g_DoSurfWarmup = !g_DoSurfWarmup;
+
+      if (!g_DoSurfWarmup && OnSurfMap()){
+        ChangeToNormalMap();
+      }
+
+      if (!g_OnDecidedMap && g_DoSurfWarmup && !OnSurfMap()) {
+        ChangeToSurfMap();
+      } else {
+        ChangeToNormalMap();
+      }
+
       PugSetup_GiveSetupMenu(client, false, pos);
     }
 
@@ -326,12 +337,6 @@ public void SetupFinished() {
 
   Call_StartForward(g_hOnSetup);
   Call_Finish();
-
-  if (!g_OnDecidedMap && g_DoSurfWarmup && !OnSurfMap()) {
-    ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
-    ServerCommand("exec sourcemod/pugsetup/set64tick.cfg");
-    ChangeToSurfMap();
-  }
 }
 
 public void StartLiveTimer() {
@@ -399,6 +404,9 @@ public void ChangeMapMenu(int client) {
 
 public int ChangeMapHandler(Menu menu, MenuAction action, int param1, int param2) {
   if (action == MenuAction_Select) {
+    if (OnSurfMap()){
+      RevertSurfSettings();
+    }
     int choice = GetMenuInt(menu, param2);
     ChangeMap(g_MapList, choice);
   } else if (action == MenuAction_Cancel && param2 == MenuCancel_ExitBack) {
