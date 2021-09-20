@@ -328,6 +328,8 @@ public void SetupFinished() {
   Call_Finish();
 
   if (!g_OnDecidedMap && g_DoSurfWarmup && !OnSurfMap()) {
+    ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
+    ServerCommand("exec sourcemod/pugsetup/set64tick.cfg");
     ChangeToSurfMap();
   }
 }
