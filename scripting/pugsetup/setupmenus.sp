@@ -154,6 +154,7 @@ public int SetupMenuHandler(Menu menu, MenuAction action, int param1, int param2
       PugSetup_GiveSetupMenu(client, false, pos);
 
     } else if (StrEqual(buffer, "set_captains")) {
+      PugSetup_Message(client, "ShitSelected");
       FakeClientCommand(client, "sm_capt");
 
     } else if (StrEqual(buffer, "change_map")) {
@@ -179,7 +180,7 @@ public int SetupMenuHandler(Menu menu, MenuAction action, int param1, int param2
           ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
           ServerCommand("tickrate_value 64.0");
           g_SurfWarmupCfgLoaded = !g_SurfWarmupCfgLoaded;
-          ChangeToSurfMap();
+          // ChangeToSurfMap();
         }
       }
 
@@ -302,7 +303,6 @@ public int DemoHandler(int client) {
  */
 public void SetupFinished() {
   ExecWarmupConfigs();
-
   if (g_UseGameWarmupCvar.IntValue != 0)
     StartWarmup(true);
   else
