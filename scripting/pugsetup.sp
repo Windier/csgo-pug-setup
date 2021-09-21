@@ -65,7 +65,7 @@ ConVar g_StartDelayCvar;
 ConVar g_UseGameWarmupCvar;
 ConVar g_WarmupCfgCvar;
 ConVar g_WarmupMoneyOnSpawnCvar;
-ConVar g_SurfCfgCvar;
+// ConVar g_SurfCfgCvar;
 
 /** Setup menu options **/
 bool g_DisplayMapType = true;
@@ -326,9 +326,9 @@ public void OnPluginStart() {
   g_WarmupMoneyOnSpawnCvar = CreateConVar(
       "sm_pugsetup_money_on_warmup_spawn", "1",
       "Whether clients recieve 16,000 dollars when they spawn. It's recommended you use mp_death_drop_gun 0 in your warmup config if you use this.");
-  g_SurfCfgCvar =
-      CreateConVar("sm_pugsetup_surf_warmup_cfg", "sourcemod/pugsetup/surf_warmup.cfg",
-                   "Config file to run on surf maps; should be in the csgo/cfg directory.");
+  // g_SurfCfgCvar =
+  //     CreateConVar("sm_pugsetup_surf_warmup_cfg", "sourcemod/pugsetup/surf_warmup.cfg",
+  //                  "Config file to run on surf maps; should be in the csgo/cfg directory.");
 
   /** Create and exec plugin's configuration file **/
   AutoExecConfig(true, "pugsetup", "sourcemod/pugsetup");
@@ -1927,9 +1927,9 @@ public void ExecWarmupConfigs() {
   // }
 }
 
-public void ExecSurfWarmupConfigs() {
-  ExecCfg(g_SurfCfgCvar);
-}
+// public void ExecSurfWarmupConfigs() {
+//   ExecCfg(g_SurfCfgCvar);
+// }
 
 public void ExecGameConfigs() {
   if (g_ExecDefaultConfigCvar.IntValue != 0)

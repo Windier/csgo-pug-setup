@@ -81,13 +81,13 @@ public void SetupMenu(int client, bool displayOnly, int menuPosition) {
 
   // 7. use surf_ map warmup
   if (g_DisplaySurfWarmup) {
-    Format(buffer, sizeof(buffer), "%T", "SurfMenuOption", client);
+    Format(buffer, sizeof(buffer), "%T", "SurfWarmupMenuOption", client);
     AddMenuItem(menu, "surf_warmup", buffer, style);
   }
 
   // 8. set captains
   if (g_GameState == GameState_Warmup && UsingCaptains()) {
-    Format(buffer, sizeof(buffer), "%T", "SurfWarmupMenuOption", client);
+    Format(buffer, sizeof(buffer), "%T", "SetCaptainsMenuOption", client);
     AddMenuItem(menu, "set_captains", buffer, style);
   }
 
@@ -177,9 +177,9 @@ public int SetupMenuHandler(Menu menu, MenuAction action, int param1, int param2
       if (!g_OnDecidedMap && g_DoSurfWarmup && !OnSurfMap()) {
         if (!g_SurfWarmupCfgLoaded){
           PugSetup_Message(client, "%t", "LoadingSurfMessage");
-          ExecSurfWarmupConfigs();
-          ServerCommand("tickrate_value 64.0");
-          ServerCommand("tickrate_force_retry 1");
+          // ExecSurfWarmupConfigs();
+          // ServerCommand("tickrate_value 64.0");
+          // ServerCommand("tickrate_force_retry 1");
           g_SurfWarmupCfgLoaded = !g_SurfWarmupCfgLoaded;
           // ChangeToSurfMap();
         }
