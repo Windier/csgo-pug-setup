@@ -81,18 +81,18 @@ public void SetupMenu(int client, bool displayOnly, int menuPosition) {
 
   // 7. use surf_ map warmup
   if (g_DisplaySurfWarmup && g_SurfMapList.Length >= 1) {
-    char enabledString[128];
-    bool surf_enabled = g_DoSurfWarmup;
-    int surf_style = style;
+    // char enabledString[128];
+    // bool surf_enabled = g_DoSurfWarmup;
+    // int surf_style = style;
 
-    if (g_MapType == MapType_Current) {
-      surf_enabled = false;
-      surf_style = ITEMDRAW_DISABLED;
-    }
+    // if (g_MapType == MapType_Current) {
+    //   surf_enabled = false;
+    //   surf_style = ITEMDRAW_DISABLED;
+    // }
 
-    GetEnabledString(enabledString, sizeof(enabledString), surf_enabled, client);
-    Format(buffer, sizeof(buffer), "%T: %s", "SurfWarmupMenuOption", client, enabledString);
-    AddMenuItem(menu, "surf_warmup", buffer, surf_style);
+    // GetEnabledString(enabledString, sizeof(enabledString), surf_enabled, client);
+    // Format(buffer, sizeof(buffer), "%T: %s", "SurfWarmupMenuOption", client, enabledString);
+    AddMenuItem(menu, "surf_warmup", buffer, style);
   }
 
   // 8. set captains
@@ -183,15 +183,21 @@ public int SetupMenuHandler(Menu menu, MenuAction action, int param1, int param2
     } else if (StrEqual(buffer, "surf_warmup")) {
       g_DoSurfWarmup = !g_DoSurfWarmup;
 
+      if (!g_OnDecidedMap && g_DoSurfWarmup && !OnSurfMap()) {
+        if (!g_SurfWarmupCfgLoaded){
+          PugSetup_Message(client, "%t", "LoadingSurfMessage");
+          ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
+          ServerCommand("tickrate_value 64.0");
+          g_SurfWarmupCfgLoaded = !g_SurfWarmupCfgLoaded;
+          ChangeToSurfMap();
+        }
+      }
+
       // if (!g_DoSurfWarmup && OnSurfMap()){
       //   ChangeToNormalMap();
       // }
 
-      // if (!g_OnDecidedMap && g_DoSurfWarmup && !OnSurfMap()) {
-      //   ChangeToSurfMap();
-      // } else {
-      //   ChangeToNormalMap();
-      // }
+
 
       PugSetup_GiveSetupMenu(client, false, pos);
     }
@@ -414,5 +420,11 @@ public int ChangeMapHandler(Menu menu, MenuAction action, int param1, int param2
     PugSetup_GiveSetupMenu(client);
   } else if (action == MenuAction_End) {
     delete menu;
+  }
+}
+
+public void ChangeToSurfMap() {
+  if (g_SurfMapList.Length > 0) {
+    ChangeMap(g_SurfMapList, GetArrayRandomIndex(g_SurfMapList), 5.0, false);
   }
 }

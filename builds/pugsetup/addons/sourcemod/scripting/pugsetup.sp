@@ -84,6 +84,7 @@ ArrayList g_PastMaps;
 ArrayList g_SurfMapList;
 bool g_ForceEnded = false;
 
+
 /** Specific choices made when setting up **/
 int g_PlayersPerTeam = 5;
 TeamType g_TeamType = TeamType_Captains;
@@ -93,6 +94,7 @@ bool g_DoKnifeRound = false;
 bool g_AutoLive = true;
 bool g_DoSurfWarmup = false;
 bool g_DoPlayout = false;
+bool g_SurfWarmupCfgLoaded = false;
 
 /** Other important variables about the state of the game **/
 TeamBalancerFunction g_BalancerFunction = INVALID_FUNCTION;
@@ -323,6 +325,7 @@ public void OnPluginStart() {
   g_WarmupMoneyOnSpawnCvar = CreateConVar(
       "sm_pugsetup_money_on_warmup_spawn", "1",
       "Whether clients recieve 16,000 dollars when they spawn. It's recommended you use mp_death_drop_gun 0 in your warmup config if you use this.");
+
 
   /** Create and exec plugin's configuration file **/
   AutoExecConfig(true, "pugsetup", "sourcemod/pugsetup");
