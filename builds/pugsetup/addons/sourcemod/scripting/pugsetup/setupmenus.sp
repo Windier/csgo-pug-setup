@@ -80,18 +80,7 @@ public void SetupMenu(int client, bool displayOnly, int menuPosition) {
   }
 
   // 7. use surf_ map warmup
-  if (g_DisplaySurfWarmup && g_SurfMapList.Length >= 1) {
-    // char enabledString[128];
-    // bool surf_enabled = g_DoSurfWarmup;
-    // int surf_style = style;
-
-    // if (g_MapType == MapType_Current) {
-    //   surf_enabled = false;
-    //   surf_style = ITEMDRAW_DISABLED;
-    // }
-
-    // GetEnabledString(enabledString, sizeof(enabledString), surf_enabled, client);
-    // Format(buffer, sizeof(buffer), "%T: %s", "SurfWarmupMenuOption", client, enabledString);
+  if (g_DisplaySurfWarmup) {
     AddMenuItem(menu, "surf_warmup", buffer, style);
   }
 
@@ -181,6 +170,7 @@ public int SetupMenuHandler(Menu menu, MenuAction action, int param1, int param2
       FakeClientCommand(client, "sm_endgame");
 
     } else if (StrEqual(buffer, "surf_warmup")) {
+      PugSetup_Message(client, "ShitSelected");
       g_DoSurfWarmup = !g_DoSurfWarmup;
 
       if (!g_OnDecidedMap && g_DoSurfWarmup && !OnSurfMap()) {
@@ -428,3 +418,14 @@ public void ChangeToSurfMap() {
     ChangeMap(g_SurfMapList, GetArrayRandomIndex(g_SurfMapList), 5.0, false);
   }
 }
+    // char enabledString[128];
+    // bool surf_enabled = g_DoSurfWarmup;
+    // int surf_style = style;
+
+    // if (g_MapType == MapType_Current) {
+    //   surf_enabled = false;
+    //   surf_style = ITEMDRAW_DISABLED;
+    // }
+
+    // GetEnabledString(enabledString, sizeof(enabledString), surf_enabled, client);
+    // Format(buffer, sizeof(buffer), "%T: %s", "SurfWarmupMenuOption", client, enabledString);

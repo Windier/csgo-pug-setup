@@ -202,15 +202,15 @@ public bool OnSurfMap() {
   return ret;
 }
 
-public void ChangeToSurfMap() {
+// public void ChangeToSurfMap() {
 
-  ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
-  ServerCommand("exec sourcemod/pugsetup/set64tick.cfg");
+//   ServerCommand("exec sourcemod/pugsetup/surf_warmup.cfg");
+//   ServerCommand("exec sourcemod/pugsetup/set64tick.cfg");
 
-  if (g_SurfMapList.Length > 0) {
-    ChangeMap(g_SurfMapList, GetArrayRandomIndex(g_SurfMapList), 5.0, false);
-  }
-}
+//   if (g_SurfMapList.Length > 0) {
+//     ChangeMap(g_SurfMapList, GetArrayRandomIndex(g_SurfMapList), 5.0, false);
+//   }
+// }
 
 // public void RevertSurfSettings() {
 //   ServerCommand("exec sourcemod/pugsetup/undo_surf_warmup.cfg");
