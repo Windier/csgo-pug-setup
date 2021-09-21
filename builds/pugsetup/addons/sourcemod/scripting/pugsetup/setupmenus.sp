@@ -179,8 +179,9 @@ public int SetupMenuHandler(Menu menu, MenuAction action, int param1, int param2
           PugSetup_Message(client, "%t", "LoadingSurfMessage");
           ExecSurfWarmupConfigs();
           ServerCommand("tickrate_value 64.0");
+          ServerCommand("tickrate_force_retry 1");
           g_SurfWarmupCfgLoaded = !g_SurfWarmupCfgLoaded;
-          ChangeToSurfMap();
+          // ChangeToSurfMap();
         }
       }
 
